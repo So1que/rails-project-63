@@ -20,3 +20,9 @@ Layout/LineLength:
 
 Lint/EmptyBlock:
   Enabled: true
+
+Layout/LineContinuationSpacing:
+  Enabled: true
+
+Layout/LineEndStringConcatenationIndentation:
+  Enabled: true
