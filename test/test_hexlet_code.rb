@@ -33,7 +33,7 @@ class TestHexletCode < Minitest::Test
   end
 
   def test_form_with_input_fields
-    expected = "<form action='#' method='post'><input name='name' type='text' value='rob'><input name='job' type='text' value='hexlet'></form>"
+    expected = "<form action='#' method='post'><label for='name'>Name</label><input name='name' type='text' value='rob'><label for='job'>Job</label><input name='job' type='text' value='hexlet'></form>"
     actual = HexletCode.form_for @user do |f|
       f.input :name
       f.input :job
@@ -42,7 +42,7 @@ class TestHexletCode < Minitest::Test
   end
 
   def test_form_with_textarea
-    expected = "<form action='#' method='post'><textarea name='job' cols='20' rows='40'>hexlet</textarea></form>"
+    expected = "<form action='#' method='post'><label for='job'>Job</label><textarea name='job' cols='20' rows='40'>hexlet</textarea></form>"
     actual = HexletCode.form_for @user do |f|
       f.input :job, as: :text
     end
@@ -50,7 +50,7 @@ class TestHexletCode < Minitest::Test
   end
 
   def test_form_with_custom_attributes
-    expected = "<form action='#' method='post'><input name='name' type='text' value='rob' class='user-input'></form>"
+    expected = "<form action='#' method='post'><label for='name'>Name</label><input name='name' type='text' value='rob' class='user-input'></form>"
     actual = HexletCode.form_for @user do |f|
       f.input :name, class: "user-input"
     end
@@ -58,7 +58,7 @@ class TestHexletCode < Minitest::Test
   end
 
   def test_form_with_textarea_custom_attrs
-    expected = "<form action='#' method='post'><textarea name='job' cols='50' rows='50'>hexlet</textarea></form>"
+    expected = "<form action='#' method='post'><label for='job'>Job</label><textarea name='job' cols='50' rows='50'>hexlet</textarea></form>"
     actual = HexletCode.form_for @user do |f|
       f.input :job, as: :text, rows: 50, cols: 50
     end
@@ -71,5 +71,39 @@ class TestHexletCode < Minitest::Test
         f.input :age
       end
     end
+  end
+
+  def test_form_with_labels
+    expected = "<form action='#' method='post'><label for='name'>Name</label><input name='name' type='text' value='rob'></form>"
+    actual = HexletCode.form_for @user do |f|
+      f.input :name
+    end
+    assert_equal expected, actual
+  end
+
+  def test_form_with_submit_button
+    expected = "<form action='#' method='post'><input type='submit' value='Save'></form>"
+    actual = HexletCode.form_for @user do |f|
+      f.submit
+    end
+    assert_equal expected, actual
+  end
+
+  def test_form_with_custom_submit_text
+    expected = "<form action='#' method='post'><input type='submit' value='Wow'></form>"
+    actual = HexletCode.form_for @user do |f|
+      f.submit "Wow"
+    end
+    assert_equal expected, actual
+  end
+
+  def test_complete_form
+    expected = "<form action='#' method='post'><label for='name'>Name</label><input name='name' type='text' value='rob'><label for='job'>Job</label><input name='job' type='text' value='hexlet'><input type='submit' value='Save'></form>"
+    actual = HexletCode.form_for @user do |f|
+      f.input :name
+      f.input :job
+      f.submit
+    end
+    assert_equal expected, actual
   end
 end

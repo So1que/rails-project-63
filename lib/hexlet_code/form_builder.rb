@@ -2,11 +2,11 @@
 
 module HexletCode
   class FormBuilder
-    attr_reader :entity, :inputs_html
+    attr_reader :entity
 
     def initialize(entity)
       @entity = entity
-      @inputs_html = ""
+      @elements = []
     end
 
     def input(name, **attributes)
@@ -16,25 +16,51 @@ module HexletCode
         raise NoMethodError, "undefined method `#{name}' for #{@entity}"
       end
 
-      input_type = attributes.delete(:as)
+      input_type = attributes.delete(:as) || :input
 
-      if input_type == :text
-        generate_textarea(name, value, attributes)
-      else
-        generate_text_input(name, value, attributes)
-      end
+      @elements << { type: :label, for: name.to_s, text: name.to_s.capitalize }
+
+      element = {
+        type: input_type || :input,
+        name: name.to_s,
+        value: value.to_s,
+        attributes: attributes
+      }
+
+      @elements << element
+    end
+
+    def submit(value = "Save")
+      @elements << { type: :submit, value: value }
+    end
+
+    def inputs_html
+      @elements.map { |element| render_element(element) }.join
     end
 
     private
 
-    def generate_text_input(name, value, attributes)
-      attrs = { name: name.to_s, type: "text", value: value.to_s }.merge(attributes)
-      @inputs_html += Tag.build("input", attrs)
-    end
-
-    def generate_textarea(name, value, attributes)
-      attrs = { name: name.to_s, cols: 20, rows: 40 }.merge(attributes)
-      @inputs_html += Tag.build("textarea", attrs) { value.to_s }
+    def render_element(element)
+      case element[:type]
+      when :label
+        Tag.build("label", for: element[:for]) { element[:text] }
+      when :input, nil
+        attrs = {
+          name: element[:name],
+          type: "text",
+          value: element[:value]
+        }.merge(element[:attributes])
+        Tag.build("input", attrs)
+      when :text
+        attrs = {
+          name: element[:name],
+          cols: 20,
+          rows: 40
+        }.merge(element[:attributes])
+        Tag.build("textarea", attrs) { element[:value] }
+      when :submit
+        Tag.build("input", type: "submit", value: element[:value])
+      end
     end
   end
 end
