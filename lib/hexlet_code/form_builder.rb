@@ -30,7 +30,7 @@ module HexletCode
       @elements << element
     end
 
-    def submit(value = "Save")
+    def submit(value = 'Save')
       @elements << { type: :submit, value: value }
     end
 
@@ -43,23 +43,23 @@ module HexletCode
     def render_element(element)
       case element[:type]
       when :label
-        Tag.build("label", for: element[:for]) { element[:text] }
+        Tag.build('label', for: element[:for]) { element[:text] }
       when :input, nil
         attrs = {
           name: element[:name],
-          type: "text",
+          type: 'text',
           value: element[:value]
         }.merge(element[:attributes])
-        Tag.build("input", attrs)
+        Tag.build('input', attrs)
       when :text
         attrs = {
           name: element[:name],
           cols: 20,
           rows: 40
         }.merge(element[:attributes])
-        Tag.build("textarea", attrs) { element[:value] }
+        Tag.build('textarea', attrs) { element[:value] }
       when :submit
-        Tag.build("input", type: "submit", value: element[:value])
+        Tag.build('input', type: 'submit', value: element[:value])
       end
     end
   end

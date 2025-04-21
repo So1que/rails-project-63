@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require 'test_helper'
 
 class TestHexletCode < Minitest::Test
   def setup
-    @user = Struct.new(:name, :job, :gender, keyword_init: true).new(name: "rob", job: "hexlet", gender: "m")
+    @user = Struct.new(:name, :job, :gender, keyword_init: true).new(name: 'rob', job: 'hexlet', gender: 'm')
   end
 
   def test_that_it_has_a_version_number
@@ -20,14 +20,14 @@ class TestHexletCode < Minitest::Test
 
   def test_form_generation_with_attributes
     expected = "<form action='#' method='post' class='hexlet-form'></form>"
-    actual = HexletCode.form_for @user, class: "hexlet-form" do |f|
+    actual = HexletCode.form_for @user, class: 'hexlet-form' do |f|
     end
     assert_equal expected, actual
   end
 
   def test_form_generation_with_url
     expected = "<form action='/profile' method='post' class='hexlet-form'></form>"
-    actual = HexletCode.form_for @user, url: "/profile", class: "hexlet-form" do |f|
+    actual = HexletCode.form_for @user, url: '/profile', class: 'hexlet-form' do |f|
     end
     assert_equal expected, actual
   end
@@ -52,7 +52,7 @@ class TestHexletCode < Minitest::Test
   def test_form_with_custom_attributes
     expected = "<form action='#' method='post'><label for='name'>Name</label><input name='name' type='text' value='rob' class='user-input'></form>"
     actual = HexletCode.form_for @user do |f|
-      f.input :name, class: "user-input"
+      f.input :name, class: 'user-input'
     end
     assert_equal expected, actual
   end
@@ -90,7 +90,7 @@ class TestHexletCode < Minitest::Test
   def test_form_with_custom_submit_text
     expected = "<form action='#' method='post'><input type='submit' value='Wow'></form>"
     actual = HexletCode.form_for @user do |f|
-      f.submit "Wow"
+      f.submit 'Wow'
     end
     assert_equal expected, actual
   end

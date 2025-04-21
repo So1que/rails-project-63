@@ -10,19 +10,19 @@ module HexletCode
       if SINGLE_TAGS.include?(tag_name)
         "<#{tag_name}#{attributes_string}>"
       else
-        content = block_given? ? yield : ""
+        content = block_given? ? yield : ''
         "<#{tag_name}#{attributes_string}>#{content}</#{tag_name}>"
       end
     end
 
     def self.build_attributes_string(attributes)
-      return "" if attributes.empty?
+      return '' if attributes.empty?
 
       attrs = attributes.map do |key, value|
         "#{key}='#{value}'"
       end
 
-      " #{attrs.join(" ")}"
+      " #{attrs.join(' ')}"
     end
   end
 end
