@@ -83,9 +83,7 @@ class TestHexletCode < Minitest::Test
 
   def test_form_with_submit_button
     expected = "<form action='#' method='post'><input type='submit' value='Save'></form>"
-    actual = HexletCode.form_for @user do |f|
-      f.submit
-    end
+    actual = HexletCode.form_for @user, &:submit
     assert_equal expected, actual
   end
 
