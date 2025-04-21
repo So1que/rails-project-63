@@ -9,19 +9,77 @@ Welcome to your new gem! In this directory, you'll find the files you need to be
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+Add this line to your application's Gemfile:
 
-Install the gem and add to the application's Gemfile by executing:
+```ruby
+gem 'hexlet_code'
+```
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+And then execute:
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+```bash
+$ bundle install
+```
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+Or install it yourself as:
+
+```bash
+$ gem install hexlet_code
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+### Basic Form
+
+Create a basic form for your object:
+
+```ruby
+User = Struct.new(:name, :job, keyword_init: true)
+user = User.new(name: 'rob', job: 'hexlet')
+
+# Generate an empty form
+HexletCode.form_for user do |f|
+end
+# => "<form action='#' method='post'></form>"
+
+# Add form attributes
+HexletCode.form_for user, class: 'user-form' do |f|
+end
+# => "<form action='#' method='post' class='user-form'></form>"
+
+# Specify a form URL
+HexletCode.form_for user, url: '/users' do |f|
+end
+# => "<form action='/users' method='post'></form>"
+```
+
+### Form Fields
+
+Add input fields to your form:
+
+```ruby
+# Add text inputs
+HexletCode.form_for user do |f|
+  f.input :name
+  f.input :job
+end
+# => "<form action='#' method='post'><input name='name' type='text' value='rob'><input name='job' type='text' value='hexlet'></form>"
+
+# Add a textarea
+HexletCode.form_for user do |f|
+  f.input :job, as: :text
+end
+# => "<form action='#' method='post'><textarea name='job' cols='20' rows='40'>hexlet</textarea></form>"
+
+# Customize field attributes
+HexletCode.form_for user do |f|
+  f.input :name, class: 'user-input'
+  f.input :job, as: :text, rows: 50, cols: 50
+end
+# => "<form action='#' method='post'><input name='name' type='text' value='rob' class='user-input'><textarea name='job' cols='50' rows='50'>hexlet</textarea></form>"
+```
+
+Note: Attempting to use a field that doesn't exist on the object will raise a `NoMethodError`.
 
 ## Development
 
