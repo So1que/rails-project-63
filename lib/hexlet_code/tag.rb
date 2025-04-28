@@ -18,7 +18,7 @@ module HexletCode
         " #{key}='#{value}'"
       end
 
-      attrs.join('')
+      attrs.join
     end
   end
 end
