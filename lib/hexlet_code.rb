@@ -3,20 +3,17 @@
 require_relative 'hexlet_code/version'
 
 module HexletCode
-  class Error < StandardError; end
-
   autoload :Tag, 'hexlet_code/tag'
   autoload :FormBuilder, 'hexlet_code/form_builder'
+  autoload :HtmlRenderer, 'hexlet_code/html_renderer'
 
-  def self.form_for(entity, **attributes)
-    url = attributes.delete(:url) || '#'
-    form_attributes = { action: url, method: 'post' }.merge(attributes)
+  def self.form_for(entity, url: '#', **attributes)
+    form_builder = FormBuilder.new(entity)
+    yield(form_builder) if block_given?
 
-    builder = FormBuilder.new(entity)
-    yield builder if block_given?
+    renderer = HtmlRenderer.new
+    form_content = renderer.render(form_builder.elements)
 
-    Tag.build('form', form_attributes) do
-      builder.inputs_html
-    end
+    Tag.build('form', { action: url, method: 'post' }.merge(attributes)) { form_content }
   end
 end
