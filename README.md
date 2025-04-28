@@ -3,10 +3,6 @@
 [![CI](https://github.com/So1que/rails-project-63/actions/workflows/lint.yml/badge.svg)](https://github.com/So1que/rails-project-63/actions/workflows/lint.yml)
 [![hexlet-check](https://github.com/So1que/rails-project-63/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/So1que/rails-project-63/actions/workflows/hexlet-check.yml)
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/hexlet_code`. To experiment with that code, run `bin/console` for an interactive prompt.
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -89,7 +85,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/hexlet_code.
+Bug reports and pull requests are welcome on GitHub at https://github.com/[So1que]/hexlet_code.
 
 ## License
 
