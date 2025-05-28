@@ -18,13 +18,12 @@ module HexletCode
 
       input_type = attributes.delete(:as) || :input
 
-      @elements << { type: :label, for: name.to_s, text: name.to_s.capitalize }
-
       element = {
         type: input_type,
         name: name.to_s,
         value: value,
-        attributes: attributes
+        attributes: attributes,
+        label: { text: name.to_s.capitalize }
       }
 
       @elements << element

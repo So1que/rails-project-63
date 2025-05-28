@@ -7,13 +7,25 @@ module HexletCode
   autoload :FormBuilder, 'hexlet_code/form_builder'
   autoload :HtmlRenderer, 'hexlet_code/html_renderer'
 
-  def self.form_for(entity, url: '#', **attributes)
-    form_builder = FormBuilder.new(entity)
-    yield(form_builder) if block_given?
+  module Inputs
+    autoload :BaseInput, 'hexlet_code/inputs/base_input'
+    autoload :InputInput, 'hexlet_code/inputs/input_input'
+    autoload :TextInput, 'hexlet_code/inputs/text_input'
+    autoload :SubmitInput, 'hexlet_code/inputs/submit_input'
+  end
 
-    renderer = HtmlRenderer.new
-    form_content = renderer.render(form_builder.elements)
+  @renderer_class = HtmlRenderer
 
-    Tag.build('form', { action: url, method: 'post' }.merge(attributes)) { form_content }
+  class << self
+    attr_accessor :renderer_class
+
+    def form_for(entity, url: '#', **attributes)
+      form_builder = FormBuilder.new(entity)
+      yield(form_builder) if block_given?
+
+      renderer = @renderer_class.new
+
+      renderer.render_form(form_builder.elements, url, attributes)
+    end
   end
 end
